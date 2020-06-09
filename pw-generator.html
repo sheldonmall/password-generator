@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Random Password Generator</title>
+  </head>
+  <body>
+    <header>
+        <h1 style="text-align: center;background:skyblue;">Password Generator</h1>
+    </header>
+    <h2 style="text-align: center;background:yellowgreen;">Generate a Password</h2>
+    
+    <button id="generate" onclick="genPassword()" style="border-color: tomato;" >Click to Generate Password</button>
+    <textarea 
+        readonly
+        id="password"
+        placeholder="Your Secure Password"
+        aria-label="Generated Password"
+    ></textarea>
+    
+    <!-- <button id="copy" style="border-color: blueviolet;">Copy to Clipboard </button> -->
+      
+    <script type="text/javascript">
+        var upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        var lowerChars = "abcdefghijklmnopqrstuvwxyz";
+        var numBers = "0123456789";
+        var splChars = "!#$%^()*+-/@~[]{}|\?";
+        var tempChars = "";
+        var finalPass = "";
+        // console.log(typeof tempChars);
+        // console.log(tempChars);
+        var optUchars='y';
+        var optLchars='y';
+        var optNums='y';
+        var optSpChars='y';
+        var passLen=0;
+        var validChoice='y';
+        console.log(optUchars);
+        console.log(optLchars);
+        console.log(optNums);
+        
+        function genPassword()
+        {        
+            // Call to fucntions to accept user choice for password
+            passLen=fnLen();            
+            console.log(passLen); 
+
+            var noChoices=false;
+            while(!noChoices)
+            {                           
+                // Functions invoked here to accept user choices for password.
+                optUchars=fnUChars();
+                optLchars=fnLChars();
+                optNums=fnNums();
+                optSpChars=fnSplChars();
+                if((optUchars==='y') || (optLchars==='y') || (optNums==='y') || (optSpChars==='y'))
+                {
+                    noChoices=true;
+                }
+                else
+                {
+                    alert("Choose at least ONE of the character types for your Password. Please try again.")
+                }
+            }             
+            
+            // create a string of all possible characters choices based on user selection
+            if(optUchars==='y')
+            {
+                tempChars=tempChars+upperChars;            
+            }
+            if(optLchars==='y')
+            {
+                tempChars=tempChars+lowerChars;           
+            }            
+            if(optSpChars==='y')
+            {
+                tempChars=tempChars+splChars;                
+            }            
+            if(optNums==='y')
+            {
+                tempChars=tempChars+numBers;               
+            }
+           
+            for (var i=0;i<passLen;i++)
+            {
+                finalPass=finalPass+tempChars[Math.floor(Math.random() * tempChars.length)];                
+            }
+            
+            // check final password
+            console.log("Final: "+finalPass);
+            
+            // Display generated password in the password box
+            var passwordId=document.getElementById("password");
+            passwordId.textContent=finalPass;
+            passwordId.style.color="blue";
+            passwordId.style.background="yellow";
+
+            function fnLen()
+            {                  
+                while(passLen < 8 || passLen > 256) 
+                {                    
+                    passLen = parseInt(prompt("Enter HOW many character password do you want: "));               
+                    if(passLen <8 || passLen >256)
+                    {
+                        alert("Password must be 8 to 256 character long.");
+                    }                             
+                    return(passLen);                          
+                } // while loop
+            }
+            
+            // *** This function accepts choice for upper case characters
+            function fnUChars()
+            {     
+                validChoice='y';
+                validChoice = prompt("Do you want your Password to include UPPER case alphabet?");                    
+                return(validChoice);
+            }     
+
+            // *** This function accepts choice for lower case characters
+            function fnLChars()
+            {     
+                validChoice='y';
+                validChoice = prompt("Do you want your Password to include LOWER case alphabet?");                    
+                return(validChoice);
+            }     
+
+            // *** This function accepts choice for upper case characters
+            function fnNums()
+            {     
+                validChoice='y';
+                validChoice = prompt("Do you want your Password to include NUMBERS?");                    
+                return(validChoice);
+            }     
+
+            // *** This function accepts choice for upper case characters
+            function fnSplChars()
+            {     
+                validChoice='y';
+                validChoice = prompt("Do you want your Password to include SPECIAL Characters?");                    
+                return(validChoice);
+            }     
+        }        
+    </script> 
+  </body>
+</html>
